@@ -505,7 +505,7 @@ contains
         implicit none
         logical :: isDonor, isHole, isCompute, isFloodSeed, isFlooded, isWallDonor, isReceiver
         integer(kind=intType), intent(in) :: i
-        call getStatus(i, isDonor, isDonor, isCompute, isFloodSeed, isFlooded, isWallDonor, isReceiver)
+        call getStatus(i, isDonor, isHole, isCompute, isFloodSeed, isFlooded, isWallDonor, isReceiver)
     end function isDonor
 
     function isHole(i)
