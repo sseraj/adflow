@@ -2052,7 +2052,7 @@ contains
     subroutine fringeReduction(level, sps)
 
         use constants
-        use blockPointers, only: nDom, il, jl, kl, status, fringePtr
+        use blockPointers, only: nDom, il, jl, kl, status, fringePtr, flowDoms
         use stencils, only: visc_drdw_stencil, n_visc_drdw
         use utils, only: setPointers
         implicit none
@@ -2063,6 +2063,19 @@ contains
         ! Working
         integer(kind=intType) :: i, j, k, nn, ii, jj, kk, i_stencil
         logical :: computeCellFound
+
+        do nn = 1, nDom
+            call setPointers(nn, level, sps)
+            do k = 2, kl
+                do j = 2, jl
+                    do i = 2, il
+                        if (flowDoms(nn, level, sps)%iblank(i, j, k) < 1) then
+                            call setIsCompute(status(i, j, k), .False.)
+                        end if
+                    end do
+                end do
+            end do
+        end do
 
         do nn = 1, nDom
             call setPointers(nn, level, sps)
